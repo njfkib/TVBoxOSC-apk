@@ -75,7 +75,7 @@ jobs:
           tag_name: ${{ env.tag }}
           body: ${{ env.commit }}
           files: |
-            apk/*-61456421.apk
+            apk/*.apk
             TVBoxOSC/source.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
