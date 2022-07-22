@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
       - name: Check New Commit
         run: |
-          upsteamCode=https://github.com/chihwell/TVBoxOSC/
+          upsteamCode=https://github.com/chihwell/TVBoxOSC
           echo "upsteamCode=$upsteamCode" >> $GITHUB_ENV
           commit=$(curl -sL $upsteamCode/commits/main |grep -o '/chihwell/TVBoxOSC//commit/[a-z0-9]\+' |head -1 | cut -d\/ -f5)
           if ! git log --oneline |grep -q "$commit"; then
@@ -84,7 +84,7 @@ jobs:
         run: |
           if [ -n "${{ secrets.CHANNEL_ID }}" ] && [ -n "${{ secrets.BOT_TOKEN }}" ]; then
             OUTPUT="${{ github.workspace }}/apk/"
-            export appRelease=$(find $OUTPUT -name "*release-chengxue2020*.apk")
+            export appRelease=$(find $OUTPUT -name "*release-chihwe*.apk")
             export sourceCode="${{ github.workspace }}/TVBoxOSC/source.zip"
             commit=${{ env.commit }}
             lastCommit=`git log --oneline |grep -o '[a-z0-9]\{40\}' |head -1`
