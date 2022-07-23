@@ -1,4 +1,4 @@
-name: Ts-Build.yml
+name: anre Build
 
 on:
   schedule:
