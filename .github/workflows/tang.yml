@@ -1,8 +1,8 @@
-name:  Taka Build
+ name: TaKa Build
 
 on:
   schedule:
-    - cron: 15,45 0-18 * * *
+    - cron: 0 * * * *
   push:
     branches:
       - master
@@ -59,7 +59,6 @@ jobs:
           rm -rf ${{ github.workspace }}/apk/
           mkdir -p ${{ github.workspace }}/apk/
           for file in `find ~ -name "*.apk" -print`; do
-      - mv "$file" apk/TVBox_TS_release_${{ env.tag }}.apk
 	    mv "$file" apk/TVBox_TS_release_${{ env.tag }}.apk
           done
       - name: Upload App To Artifact
@@ -85,7 +84,7 @@ jobs:
         run: |
           if [ -n "${{ secrets.CHANNEL_ID }}" ] && [ -n "${{ secrets.BOT_TOKEN }}" ]; then
             OUTPUT="${{ github.workspace }}/apk/"
-            export appRelease=$(find $OUTPUT -name "*TVBox_TS_release_*${{ env.tag }}.apk")
+            export appRelease=$(find $OUTPUT -name "*release*.apk")
             export sourceCode="${{ github.workspace }}/TVBoxOSC/source.zip"
             commit=${{ env.commit }}
             lastCommit=`git log --oneline |grep -o '[a-z0-9]\{40\}' |head -1`
