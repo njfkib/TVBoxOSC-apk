@@ -59,7 +59,7 @@ jobs:
           rm -rf ${{ github.workspace }}/apk/
           mkdir -p ${{ github.workspace }}/apk/
           for file in `find ~ -name "*.apk" -print`; do
-              mv "$file" apk/TVBox_TS_release_${{ env.tag }}.apk
+              mv "$file" apk/TVBox_Tk_release_${{ env.tag }}.apk
           done
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
