@@ -90,7 +90,7 @@ jobs:
             TVBoxOSC/${{ env.commitS }}-source.zip
         env:
           GITHUB_TOKEN: ${{ secrets.BUILD_TOKEN }}
-               - name: Post To Telegram
+      - name: Post To Telegram
         if: ${{ env.commit }}
         run: |
           if [ -n "${{ secrets.CHANNEL_ID }}" ] && [ -n "${{ secrets.BOT_TOKEN }}" ]; then
