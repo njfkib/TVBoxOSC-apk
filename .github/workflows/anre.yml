@@ -1,8 +1,9 @@
-name:  anre Build
+
+name: anae_Auto_Build
 
 on:
   schedule:
-    - cron: 45 22-23,6-17 * * *
+    - cron: 15,45 0-18 * * *
   push:
     branches:
       - master
@@ -60,7 +61,7 @@ jobs:
           rm -rf apk/
           mkdir -p apk/
           for file in `find ~ -name "*release*.apk" -print`; do
-            mv "$file" apk/TVBox_release_${{ env.tag }}.apk
+            mv "$file" apk/Anae_release_${{ env.tag }}.apk
           done
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
@@ -85,7 +86,7 @@ jobs:
         run: |
           if [ -n "${{ secrets.CHANNEL_ID }}" ] && [ -n "${{ secrets.BOT_TOKEN }}" ]; then
             OUTPUT="${{ github.workspace }}/TVBoxOSC/apk/"
-            export appRelease=$(find $OUTPUT -name "*release-an*.apk")
+            export appRelease=$(find $OUTPUT -name "*release*.apk")
             export sourceCode="${{ github.workspace }}/TVBoxOSC/${{ env.commitS }}-source.zip"
             lastCommit=`git log --oneline |grep -o '[a-z0-9]\{40\}' |head -1`
             cd TVBoxOSC
