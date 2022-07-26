@@ -1,0 +1,63 @@
+name: Auto Build llazyl Ver.
+
+on:
+
+  schedule:
+
+    - cron: 15,45 22-23,0-18 * * *
+
+  push:
+
+    branches:
+
+      - master
+
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+
+        uses: actions/checkout@v3
+
+        with:
+
+          fetch-depth: 0
+
+      - name: Check New Commit
+
+        run: |
+
+          upstreamCode=https://github.com/llazyl/TTTTT
+
+          echo "upstreamCode=$upstreamCode" >> $GITHUB_ENV
+
+          commit=$(curl -sL $upstreamCode/commits/main |grep -o '/llazyl/TTTTT/commit/[a-z0-9]\+' |head -1 | cut -d\/ -f5)
+
+          if ! git log --oneline |grep -q "$commit"; then
+
+            echo "commit=$commit" >> $GITHUB_ENV
+
+            echo "commitS=${commit:0:7}" >> $GITHUB_ENV
+
+          fi
+
+      - name: Checkout Source Code and Zip
+
+        if: ${{ env.commit }}
+
+        run: |
+
+          git clone ${{ env.upstreamCode }} TVBoxOSC
+
+          cd TVBoxOSC
+
+          git checkout ${{ env.commit }}
+
+          echo "tag=$(git log --date=format:'%Y%
