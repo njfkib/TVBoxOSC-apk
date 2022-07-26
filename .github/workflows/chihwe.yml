@@ -1,8 +1,8 @@
-name: chihwe Build
+name: Chi_Auto_Build
 
 on:
   schedule:
-    - cron: 15,45 22-23,0-18 * * *
+    - cron: 15,45 0-18 * * *
   push:
     branches:
       - master
@@ -47,20 +47,12 @@ jobs:
           sed -i '$a\RELEASE_KEY_ALIAS=TVBoxOSC'            ./gradle.properties
           sed -i '$a\RELEASE_STORE_PASSWORD=TVBoxOSC'       ./gradle.properties
           sed -i '$a\RELEASE_KEY_PASSWORD=TVBoxOSC'         ./gradle.properties
-      - name: Build Release With Gradle
+      - name: Build With Gradle
         if: ${{ env.commit }}
         working-directory: TVBoxOSC
         run: |
           chmod +x gradlew
           ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
-          
-      - name: Build Debug With Gradle
-        if: ${{ env.commit }}
-        working-directory: TVBoxOSC
-        run: |
-          chmod +x gradlew
-          ./gradlew assembledebug --build-cache --parallel --daemon --warning-mode all
-          
       - name: Prepare App
         if: ${{ env.commit }}
         working-directory: TVBoxOSC
@@ -68,16 +60,13 @@ jobs:
           rm -rf apk/
           mkdir -p apk/
           for file in `find ~ -name "*release*.apk" -print`; do
-            mv "$file" apk/TVBox_chihwell_Release_${{ env.tag }}.apk
-          done
-          for file in `find ~ -name "*debug*.apk" -print`; do
-            mv "$file" apk/TVBox_chihwell_Debug_${{ env.tag }}.apk
+            mv "$file" apk/Chi_release_${{ env.tag }}.apk
           done
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
         if: ${{ env.commit }}
         with:
-          name: TVBox_chihwell_Release_and_Debug
+          name: com.github.tvbox.osc
           path: TVBoxOSC/apk/*
       - name: Release and Upload Assets
         uses: softprops/action-gh-release@v1
@@ -90,8 +79,8 @@ jobs:
             TVBoxOSC/apk/*
             TVBoxOSC/${{ env.commitS }}-source.zip
         env:
-          GITHUB_TOKEN: ${{ secrets.BUILD_TOKEN }}
-           - name: Post To Telegram
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Post To Telegram
         if: ${{ env.commit }}
         run: |
           if [ -n "${{ secrets.CHANNEL_ID }}" ] && [ -n "${{ secrets.BOT_TOKEN }}" ]; then
@@ -118,11 +107,11 @@ jobs:
         if: ${{ env.commit }}
         run: |
           rm -rf TVBoxOSC
-          sed -i "/Updated Commit/c\\+ Updated Commit：${{ env.commit }}" README.md
+          sed -i "/Updated Commit/c\\+ Updated Commit: ${{ env.commit }}" README.md
           sed -i '/url =/d' ./.git/config
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url --add origin "https://${{ github.actor }}:${{ secrets.BUILD_TOKEN }}@github.com/${{ github.repository }}"
+          git remote set-url --add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git add --all
           git commit -m "${{ env.commit }}"
           git push -u -f origin master
