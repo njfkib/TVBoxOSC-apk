@@ -62,7 +62,9 @@ jobs:
           for file in `find ~ -name "*release*.apk" -print`; do
             mv "$file" apk/q21561_release_${{ env.tag }}.apk
           done
-      - name: Upload App To Artifact
+            for file in `find ~ -name "*debug*.apk" -print`; do
+            mv "$file" apk/TVBox_takagen99_${{ env.tag }}_Debug.apk
+          done  - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
         if: ${{ env.commit }}
         with:
