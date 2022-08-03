@@ -64,7 +64,8 @@ jobs:
           done
             for file in `find ~ -name "*debug*.apk" -print`; do
             mv "$file" apk/CH_OC__${{ env.tag }}_Debug.apk
-          done  - name: Upload App To Artifact
+          done 
+        - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
         if: ${{ env.commit }}
         with:
