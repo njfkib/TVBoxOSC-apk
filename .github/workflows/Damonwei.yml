@@ -58,9 +58,7 @@ jobs:
         run: |
           rm -rf apk/
           mkdir -p apk/
-          for file in `find ~ -name "*release*.apk" -print`; do
-            mv "$file" apk/Damonwei_8_release_${{ env.tag }}.apk
-          done
+
             for file in `find ~ -name "*debug*.apk" -print`; do
             mv "$file" apk/Damonwei_8__${{ env.tag }}_Debug.apk
           done  - name: Upload App To Artifact
