@@ -1,4 +1,4 @@
-name: Chi_Auto_Build
+name: Chi_CSP_AutoBuild
 
 on:
   schedule:
