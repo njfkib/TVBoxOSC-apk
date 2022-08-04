@@ -1,4 +1,4 @@
-name: ch_0c0_Auto_Build
+name: ch_Build_Auto
 
 on:
   schedule:
