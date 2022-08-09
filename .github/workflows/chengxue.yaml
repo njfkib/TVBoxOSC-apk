@@ -1,5 +1,4 @@
 name: chengxue_Auto_Build
-
 on:
   schedule:
     - cron: 15,45 0-18 * * *
@@ -60,7 +59,7 @@ jobs:
           rm -rf apk/
           mkdir -p apk/
           for file in `find ~ -name "*release*.apk" -print`; do
-            mv "$file" apk/CX_tk_${{ env.tag }}.apk
+            mv "$file" apk/CX_Taka_${{ env.tag }}.apk
           done
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
@@ -77,7 +76,7 @@ jobs:
           body: ${{ env.commit }}
           files: |
             TVBoxOSC/apk/*
-            TVBoxOSC/${{ env.commitS }}-source.zip
+            TVBoxOSC/${{ env.commitS }}-cxTakasource.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      - name: Post To Telegram
