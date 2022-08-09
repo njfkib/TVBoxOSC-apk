@@ -1,4 +1,4 @@
-name: chengxue_Auto_Build
+name: CXTK_Auto_Build
 on:
   schedule:
     - cron: 15,45 0-18 * * *
