@@ -59,7 +59,7 @@ jobs:
           rm -rf apk/
           mkdir -p apk/
           for file in `find ~ -name "*release*.apk" -print`; do
-            mv "$file" apk/CX_Taka_${{ env.tag }}.apk
+            mv "$file" apk/CXTK_release_${{ env.tag }}.apk
           done
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
@@ -76,10 +76,10 @@ jobs:
           body: ${{ env.commit }}
           files: |
             TVBoxOSC/apk/*
-            TVBoxOSC/${{ env.commitS }}-cxTakasource.zip
+            TVBoxOSC/${{ env.commitS }}-Takasource.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-     - name: Post To Telegram
+      - name: Post To Telegram
         if: ${{ env.commit }}
         run: |
           if [ -n "${{ secrets.CHANNEL_ID }}" ] && [ -n "${{ secrets.BOT_TOKEN }}" ]; then
