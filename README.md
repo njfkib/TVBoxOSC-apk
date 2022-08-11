@@ -6,6 +6,6 @@
 [![Total](https://shields.io/github/downloads/njfkib/TVBoxOSC-apk/total?logo=Bookmeter&label=Counts&logoColor=yellow&color=yellow)](https://github.com/njfkib/TVBoxOSC-apk/releases)
 
 
-+ Updated Commit: 832b58d192ccf49819b6ab8c28afcd034c9b0e1b
++ Updated Commit: c00897d601f6e9b5e810710d8339cd83033d65cf
 
 
