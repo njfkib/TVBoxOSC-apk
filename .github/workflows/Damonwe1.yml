@@ -1,4 +1,4 @@
-name: Damonwei_Auto_Build
+name: Damonwe  Auto Build
 
 on:
   schedule:
@@ -18,6 +18,9 @@ jobs:
           fetch-depth: 0
       - name: Check New Commit
         run: |
+          upstreamCode=
+
+
           upstreamCode=https://github.com/Damonwei1120/8
           echo "upstreamCode=$upstreamCode" >> $GITHUB_ENV
           commit=$(curl -sL $upstreamCode/commits/main |grep -o '/Damonwei1120/8/commit/[a-z0-9]\+' |head -1 | cut -d\/ -f5)
@@ -47,12 +50,20 @@ jobs:
           sed -i '$a\RELEASE_KEY_ALIAS=TVBoxOSC'            ./gradle.properties
           sed -i '$a\RELEASE_STORE_PASSWORD=TVBoxOSC'       ./gradle.properties
           sed -i '$a\RELEASE_KEY_PASSWORD=TVBoxOSC'         ./gradle.properties
-      - name: Build With Gradle
+      - name: Build Release With Gradle
         if: ${{ env.commit }}
         working-directory: TVBoxOSC
         run: |
           chmod +x gradlew
           ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
+          
+      - name: Build Debug With Gradle
+        if: ${{ env.commit }}
+        working-directory: TVBoxOSC
+        run: |
+          chmod +x gradlew
+          ./gradlew assembledebug --build-cache --parallel --daemon --warning-mode all
+          
       - name: Prepare App
         if: ${{ env.commit }}
         working-directory: TVBoxOSC
@@ -60,13 +71,16 @@ jobs:
           rm -rf apk/
           mkdir -p apk/
           for file in `find ~ -name "*release*.apk" -print`; do
-            mv "$file" apk/Damon_release_${{ env.tag }}.apk
+            mv "$file" apk/TVBox_Damonwei1120_${{ env.tag }}_Release.apk
+          done
+          for file in `find ~ -name "*debug*.apk" -print`; do
+            mv "$file" apk/TVBox_Damonwei1120_${{ env.tag }}_Debug.apk
           done
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v3
         if: ${{ env.commit }}
         with:
-          name: com.github.tvbox.osc
+          name: TVBox_Damonwei1120_Release_and_Debug
           path: TVBoxOSC/apk/*
       - name: Release and Upload Assets
         uses: softprops/action-gh-release@v1
@@ -77,7 +91,7 @@ jobs:
           body: ${{ env.commit }}
           files: |
             TVBoxOSC/apk/*
-            TVBoxOSC/ChiCSP_${{ env.commitS }}-source.zip
+            TVBoxOSC/${{ env.commitS }}-source.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Post To Telegram
