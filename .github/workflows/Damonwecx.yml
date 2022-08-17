@@ -1,8 +1,7 @@
 name: Auto self Build
 
 on:
-
-push:
+  push:
     branches:
       - main
   pull_request:
