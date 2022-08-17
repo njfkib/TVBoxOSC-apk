@@ -5,7 +5,8 @@ on:
     - cron: 15,45 0-18 * * *
   push:
     branches:
-      - master
+      - main
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -18,12 +19,9 @@ jobs:
           fetch-depth: 0
       - name: Check New Commit
         run: |
-          upstreamCode=
-
-
-          upstreamCode=https://github.com/Damonwei1120/8
+          upstreamCode=https://github.com/chengxue2020/Damonwei1120-7test
           echo "upstreamCode=$upstreamCode" >> $GITHUB_ENV
-          commit=$(curl -sL $upstreamCode/commits/main |grep -o '/Damonwei1120/8/commit/[a-z0-9]\+' |head -1 | cut -d\/ -f5)
+          commit=$(curl -sL $upstreamCode/commits/main |grep -o '/chengxue2020/Damonwei1120-7test/commit/[a-z0-9]\+' |head -1 | cut -d\/ -f5)
           if ! git log --oneline |grep -q "$commit"; then
             echo "commit=$commit" >> $GITHUB_ENV
             echo "commitS=${commit:0:7}" >> $GITHUB_ENV
@@ -76,12 +74,6 @@ jobs:
           for file in `find ~ -name "*debug*.apk" -print`; do
             mv "$file" apk/TVBox_Damonwei1120_${{ env.tag }}_Debug.apk
           done
-      - name: Upload App To Artifact
-        uses: actions/upload-artifact@v3
-        if: ${{ env.commit }}
-        with:
-          name: TVBox_Damonwei1120_Release_and_Debug
-          path: TVBoxOSC/apk/*
       - name: Release and Upload Assets
         uses: softprops/action-gh-release@v1
         if: ${{ env.commit }}
