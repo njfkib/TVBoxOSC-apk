@@ -1,4 +1,4 @@
-name: Auto self Build
+name: Auto_self Build
 
 on:
     - cron: 15,45 0-18 * * *
