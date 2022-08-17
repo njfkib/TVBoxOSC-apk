@@ -1,7 +1,6 @@
-name: Damonwe1  Auto Build
+name: Auto self Build
 
 on:
-  schedule:
     - cron: 15,45 0-18 * * *
   push:
     branches:
@@ -86,6 +85,7 @@ jobs:
             TVBoxOSC/${{ env.commitS }}-source.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Post To Telegram
         if: ${{ env.commit }}
         run: |
