@@ -1,7 +1,11 @@
 name: Auto self Build
 
 on:
-  push:
+
+  schedule:
+    - cron: 15,45 0-18 * * *
+
+push:
     branches:
       - main
   pull_request:
