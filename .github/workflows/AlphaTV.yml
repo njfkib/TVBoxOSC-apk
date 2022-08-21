@@ -2,7 +2,7 @@ name: AlphaTV-Auto
 
 on:
   schedule:
-    - cron: 0 0 * * *
+    - cron: * * * * *
   workflow_dispatch:
 
 
