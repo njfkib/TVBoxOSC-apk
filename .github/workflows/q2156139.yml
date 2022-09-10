@@ -2,7 +2,8 @@ name: q2156_Build_auto
 
 on:
   schedule:
-    - cron: 15,45 0-18 * * *
+
+    - cron: * * * * *
   push:
     branches:
       - master
